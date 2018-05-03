@@ -36,11 +36,11 @@ class generator:
 				(self._maxdepth - self._mindepth))
 		stop = random.uniform(0, 1) < prTerm
 
-		if stop and len(filtLeaf) > 0: # if terminating and leaf available
+		if stop and len(filtLeaf) > 0 or len(filtOp) == 0: # if terminating and leaf available
 			leafTerm = random.choice(filtLeaf)
 			assert isinstance(leafTerm, term)
 			root = leafTerm.create(parent, i)
-		elif len(filtOp) > 0: # always fallback to available operations
+		else: # always fallback to available operations
 			opTerm = random.choice(filtOp)
 			assert isinstance(opTerm, nonterm)
 			if not otype:
@@ -48,7 +48,5 @@ class generator:
 			root = opTerm.create(parent, i, otype)
 			root.inputs = [self.randTree(parent=root, i=i, depth=depth+1) 
 				for i in range(len(root.itypes))]
-		else:
-			raise Exception('dead-end node') # todo: attempt to resolve
 
 		return root

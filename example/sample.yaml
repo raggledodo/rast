@@ -9,6 +9,10 @@ leaves:
   names:
   - placeholder
   - variable
+- output: pneg_tensor # potentially negative
+  names:
+  - placeholder
+  - variable
 groups:
 - group: ELEMENTARY 
   attr: 
