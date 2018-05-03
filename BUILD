@@ -49,5 +49,5 @@ py_test(
     name = "test",
     srcs = [ ":test_py" ],
     deps = [ ":rast" ],
-    data = [ "//example:cfgs" ]
+    data = [ "//example:cfgs" ],
 )

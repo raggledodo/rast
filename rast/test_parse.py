@@ -95,7 +95,7 @@ class TestParse(unittest.TestCase):
 			self.assertEqual(2, mindepth)
 			self.assertEqual(9, maxdepth)
 
-			self.assertEqual(4, len(terms))
+			self.assertEqual(6, len(terms))
 			self.assertEqual('scalar_double', terms[0].name)
 			self.assertEqual('scalar_d', terms[0].otype)
 			self.assertEqual('scalar_int', terms[1].name)
@@ -104,6 +104,10 @@ class TestParse(unittest.TestCase):
 			self.assertEqual('tensor', terms[2].otype)
 			self.assertEqual('variable', terms[3].name)
 			self.assertEqual('tensor', terms[3].otype)
+			self.assertEqual('placeholder', terms[4].name)
+			self.assertEqual('pneg_tensor', terms[4].otype)
+			self.assertEqual('variable', terms[5].name)
+			self.assertEqual('pneg_tensor', terms[5].otype)
 		
 			self.assertEqual(18, len(nterms))
 

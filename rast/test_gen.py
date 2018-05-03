@@ -58,19 +58,19 @@ class TestGen(unittest.TestCase):
 			_traverse(root, typecheck)
 
 	def test_depth(self):
+		mdepth = {"depth": 0}
+		def depthcheck(node, depth):
+			mdepth["depth"] = max(mdepth["depth"], depth)
+
 		setBuilder(_defaultBuilder)
 		g = generator(TERMS, NTERMS, (3, 10))
 
 		for i in range(1000):
-			mdepth = 0
-			def depthcheck(node, depth):
-				nonlocal mdepth
-				mdepth = max(mdepth, depth)
-
 			root = g.randTree()
 			_traverse(root, depthcheck)
-			self.assertLessEqual(3, mdepth)
-			self.assertGreaterEqual(10, mdepth)
+			self.assertLessEqual(3, mdepth["depth"])
+			self.assertGreaterEqual(10, mdepth["depth"])
+			mdepth["depth"] = 0
 
 	def test_limit(self):
 		setBuilder(_defaultBuilder)
