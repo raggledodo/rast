@@ -6,9 +6,6 @@ import numpy as np
 from rast.last import node
 from rast.plugin import setBuilder
 
-MIN_RANK = 0
-MAX_RANK = 6
-
 def expand(shape, idx, mul):
 	after = shape[idx:]
 	out = shape[:idx]
