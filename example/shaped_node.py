@@ -73,4 +73,5 @@ class shapeNode(node):
 		self.scalar = scalar
 		SHAPER[self.shapeLabel](self)
 
-setBuilder(lambda name, itypes: shapeNode(name, itypes))
+setBuilder(lambda name, itypes, parent, i, attr: \
+	shapeNode(name, itypes, parent, i, attr))
