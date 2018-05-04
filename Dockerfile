@@ -8,5 +8,4 @@ RUN easy_install pip
 RUN pip install pyyaml numpy
 RUN bazel build --spawn_strategy=standalone //...
 
-CMD [ "bazel", "test", "//...", "--test_output=all", "&&", \
-    "bazel", "run", "//example:example" ]
+CMD [ "bash", "test.sh" ]
