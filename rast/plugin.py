@@ -14,6 +14,6 @@ def setBuilder(builder):
 
 def safeNode(name, itypes,
 	parent=None, i=0, attr={}):
-	out = _builder(name, itypes, parent, i, attr)
+	out = _builder(**locals())
 	assert isinstance(out, node)
 	return out
