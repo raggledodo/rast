@@ -11,8 +11,7 @@ class term:
 		self.otype = otype
 	
 	def create(self, parent, i):
-		out = safeNode(self.name, [self.otype])
-		out.plugin(parent, i)
+		out = safeNode(self.name, [self.otype], parent, i)
 		return out
 
 # operational template
@@ -30,6 +29,6 @@ class nonterm:
 	def create(self, parent, i, otype):
 		assert otype in self.tinfos
 		self.uses = self.uses+1
-		out = safeNode(self.name, random.choice(self.tinfos[otype]))
-		out.plugin(parent, i, self.attr)
+		out = safeNode(self.name, random.choice(self.tinfos[otype]), 
+			parent, i, self.attr)
 		return out

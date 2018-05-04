@@ -37,11 +37,16 @@ def _traverse(root, func, depth=0):
 		func(root, depth)
 
 class mockNode(node):
-	def plugin(self, parent, i, attr={}):
+	def __init__(self, name, otype, parent, i, attr={}):
+		super(mockNode, self).__init__(name, otype, parent, i, attr)
 		self.parent = parent
 		self.attr = attr
 		if parent:
 			self.otype = parent.itypes[i]
+
+def setMock():
+	setBuilder(lambda name, itypes, parent, i, attr: \
+		mockNode(name, itypes, parent, i, attr))
 
 class TestGen(unittest.TestCase):
 	def test_rtree(self):
@@ -50,8 +55,8 @@ class TestGen(unittest.TestCase):
 			for expect_it, got_it in zip(node.itypes, itypes):
 				self.assertEqual(expect_it, got_it)
 		
-		setBuilder(lambda name, itypes: mockNode(name, itypes))
-		g = generator(TERMS, NTERMS, (3, 10))
+		setMock()
+		g = generator(TERMS, NTERMS, (3, 10)) 
 
 		for i in range(1000):
 			root = g.randTree()
@@ -62,7 +67,7 @@ class TestGen(unittest.TestCase):
 		def depthcheck(node, depth):
 			mdepth["depth"] = max(mdepth["depth"], depth)
 
-		setBuilder(_defaultBuilder)
+		setMock()
 		g = generator(TERMS, NTERMS, (3, 10))
 
 		for i in range(1000):

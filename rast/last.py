@@ -2,7 +2,8 @@
 
 # working node representation generated
 class node(object):
-	def __init__(self, name, itypes):
+	def __init__(self, name, itypes, 
+		parent=None, i=0, attr={}):
 		self.name = name
 		self.itypes = itypes
 		self.inputs = None
@@ -13,8 +14,3 @@ class node(object):
 		else:
 			postfix = ''
 		return self.name + postfix
-
-	# abstract method for extension
-	# should apply to self with attr
-	def plugin(self, parent, i, attr={}):
-		pass

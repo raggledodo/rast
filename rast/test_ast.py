@@ -11,19 +11,23 @@ PARENT_ITYPES = ['parent_itype']
 PARENT = node(PARENT_NAME, PARENT_ITYPES)
 
 class mockNode(node):
-	def plugin(self, parent, i, attr={}):
+	def __init__(self, name, otype, parent, i, attr={}):
+		super(mockNode, self).__init__(name, otype, parent, i, attr)
 		self.parent = parent
 		self.attr = attr
 		if parent:
 			self.otype = parent.itypes[i]
+
+def setMock():
+	setBuilder(lambda name, itypes, parent, i, attr: \
+		mockNode(name, itypes, parent, i, attr))
 
 class TestAST(unittest.TestCase):
 	def test_term(self):
 		CHILD_NAME = 'sample_leaf'
 		CHILD_OTYPE = 'sample_outtype'
 
-		setBuilder(lambda name, itypes: mockNode(name, itypes))
-
+		setMock()
 		temp = term(CHILD_NAME, CHILD_OTYPE)
 		child = temp.create(PARENT, 0)
 		self.assertTrue(isinstance(child, node))
@@ -48,8 +52,7 @@ class TestAST(unittest.TestCase):
 		CHILD_ATTR = {'key': 'value'}
 		parent = node(PARENT_NAME, PARENT_ITYPES)
 
-		setBuilder(lambda name, itypes: mockNode(name, itypes))
-		
+		setMock()
 		temp = nonterm(CHILD_NAME, CHILD_OTYPES, CHILD_ATTR)
 		child = temp.create(PARENT, 0, PARENT.itypes[0])
 		self.assertTrue(isinstance(child, node))
