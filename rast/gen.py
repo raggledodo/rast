@@ -3,23 +3,32 @@
 import math
 import random
 
-from rast.last import node
 from rast.ast import term, nonterm
 
 # create random node tree
-class generator:
-	def __init__(self, termTemps, ntermTemps, depths):
-		self.termTemps = termTemps
-		self.ntermTemps = ntermTemps
+class generator(object):
+	def __init__(self, terms, nterms, depths):
+		'''
+		terms 	[]term
+		nterms 	[]nonterms
+		depths 	(int, int)
+		'''
+		self.terms = terms
+		self.nterms = nterms
 		self._mindepth, self._maxdepth = depths
 		assert self._maxdepth > self._mindepth
 		assert self._mindepth >= 0
 
 	def randTree(self, parent=None, i=0, depth=0):
-		filtLeaf = self.termTemps
-		filtOp = self.ntermTemps
+		'''
+		parent 	node
+		i 		int
+		depth 	int
+		return node
+		'''
+		filtLeaf = self.terms
+		filtOp = self.nterms
 		if depth > 0 or parent is not None:
-			assert isinstance(parent, node)
 			otype = parent.itypes[i]
 			# select appropriate nodes to choose from
 			filtLeaf = list(filter(lambda leaf: otype == leaf.otype, filtLeaf))

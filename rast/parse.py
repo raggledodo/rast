@@ -2,7 +2,6 @@
 
 import yaml
 
-from rast.gen import generator
 from rast.ast import term, nonterm
 
 GROUPS_KEY = 'groups'
@@ -19,6 +18,10 @@ SUBGROUP_KEY = 'subgroups'
 
 # parses yaml stream and returns generator
 def parse(stream):
+	'''
+	stream 	<python file object>
+	return ([]term, []nonterm, (int, int))
+	'''
 	raw = yaml.load(stream)
 
 	# manditory parameters
@@ -42,15 +45,29 @@ def parse(stream):
 	return leaves, groups, (mindepth, maxdepth)
 
 def _parseLeaves(leaves):
+	'''
+	leaves 	[]dict<string: []string/string>
+	return []term
+	'''
 	assert isinstance(leaves, list)
 	otypes = []
 	return _flatten(list(map(lambda leaf: _parseLeaf(leaf, otypes), leaves)))
 
 def _parseGroups(groups, supergroup={}):
+	'''
+	groups 		[]dict
+	supergroup 	dict
+	return []nonterm
+	'''
 	assert isinstance(groups, list)
 	return _flatten(list(map(lambda group: _parseGroup(group, supergroup), groups)))
 
 def _parseLeaf(leaf, otypes):
+	'''
+	leaf 	string
+	otypes 	[]string
+	return []term
+	'''
 	assert isinstance(leaf, dict)
 	otype = leaf[LEAFTYPE_KEY]
 	if otype in otypes:
@@ -61,6 +78,11 @@ def _parseLeaf(leaf, otypes):
 	return list(map(lambda name: term(name, otype), names))
 
 def _parseGroup(group, supergroup):
+	'''
+	group 		dict
+	supergroup 	dict
+	return []nonterm
+	'''
 	assert isinstance(group, dict)
 	if ATTR_KEY in group:
 		supergroup[ATTR_KEY] = group[ATTR_KEY]
@@ -92,10 +114,18 @@ def _parseGroup(group, supergroup):
 	return out
 
 def _itypeParse(itype):
+	'''
+	itype 	string
+	return []string
+	'''
 	iarr = itype.split(',')
 	return list(map(lambda s: s.strip(), iarr))
 
 def _flatten(arr):
+	'''
+	arr 	[](string/[]string)
+	return []string
+	'''
 	out = []
 	if len(arr) == 0:
 		pass

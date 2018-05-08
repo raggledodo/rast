@@ -8,4 +8,8 @@ RUN easy_install pip
 RUN pip install pyyaml numpy
 RUN bazel build --spawn_strategy=standalone //...
 
-CMD [ "bash", "test.sh" ]
+RUN echo '#!/usr/bin/env bash\n\
+bazel test //... --test_output=all\n\
+bazel run //example:example' > docker_test.sh
+
+CMD [ "bash", "docker_test.sh" ]

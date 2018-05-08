@@ -4,6 +4,13 @@
 class node(object):
 	def __init__(self, name, itypes, 
 		parent=None, i=0, attr={}):
+		'''
+		name 	string
+		itypes 	[]string
+		parent 	node
+		i 		int
+		attr 	dict
+		'''
 		self.name = name
 		self.itypes = itypes
 		self.inputs = None
